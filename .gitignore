@@ -1,9 +1,2 @@
-node_modules/*
 .project
-.pydevproject
-/node_modules
-config.js
-public/dev.html
-.pydevprojectpublisher/content
 
-*.log
