@@ -36,9 +36,9 @@ DCPrototype._showPanel = function() {
    var self = this;
 
    // 显示遮罩层
-   var targetWidth = self.bodyElem.clientWidth * 0.6
+   var targetWidth = self.bodyElem.clientWidth * 0.7;
    var cal = function() {
-      return 'height:' + self.bodyElem.clientHeight + 'px;width:' + targetWidth + 'px;' + 'left:' + (targetWidth * -1) + 'px;';
+      return 'height:' + self.bodyElem.scrollHeight + 'px;width:' + targetWidth + 'px;' + 'left:' + (targetWidth * -1) + 'px;';
    };
    
    var targetDOM = document.createElement('div');
