@@ -5,8 +5,8 @@
  * 2013-07-08 初始化文件完成最基本的结构
  * 用于提取文章中内容的Chrome插件
  */
+
 (function() {
-   
    'use strict';
 
    var DrawContent = function() {
