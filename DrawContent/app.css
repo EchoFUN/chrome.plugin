@@ -14,4 +14,8 @@
    width: 100px;
    background-color: #fff;
    z-index: 1000
+   
+   -webkit-transition: -webkit-transform 450ms ease-in-out;
+   transition: -webkit-transform 450ms ease-in-out;
+   -webkit-transform: translate3d(-1680px, 0, 0);
 }

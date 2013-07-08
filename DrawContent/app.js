@@ -43,6 +43,7 @@ DCPrototype._showPanel = function() {
    this.targetDOM = targetDOM;
 
    this.bodyElem.appendChild(targetDOM);
+   
 
    this._sendRequest();
 };
