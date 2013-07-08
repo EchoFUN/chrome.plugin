@@ -9,13 +9,11 @@
 .ContentPanel {
    position: absolute;
    top: 0;
-   left: 0;
    height: 100px;
    width: 100px;
    background-color: #fff;
-   z-index: 1000
+   z-index: 1000;
    
-   -webkit-transition: -webkit-transform 450ms ease-in-out;
-   transition: -webkit-transform 450ms ease-in-out;
-   -webkit-transform: translate3d(-1680px, 0, 0);
+   -webkit-transition: left 1000ms ease-in-out;
+   -webkit-box-shadow: rgb(204, 204, 204) 10px 0px 30px;
 }

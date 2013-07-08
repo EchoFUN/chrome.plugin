@@ -26,26 +26,35 @@ DCPrototype.start = function() {
 
 DCPrototype._initialize = function() {
    var initDOM = function() {
-      this.bodyElem = document.getElementsByTagName('body')[0];
-
+      this.bodyElem = document.body;
    };
    initDOM.call(this);
    this._showPanel();
 };
 
 DCPrototype._showPanel = function() {
+   var self = this;
 
    // 显示遮罩层
+   var targetWidth = self.bodyElem.clientWidth * 0.6
+   var cal = function() {
+      return 'height:' + self.bodyElem.clientHeight + 'px;width:' + targetWidth + 'px;' + 'left:' + (targetWidth * -1) + 'px;';
+   };
+   
    var targetDOM = document.createElement('div');
    targetDOM.innerHTML = this._HTMLstructure;
    targetDOM.className = 'ContentPanel';
    targetDOM.id = 'ContentPanel';
+   targetDOM.setAttribute('style', cal());
    this.targetDOM = targetDOM;
-
    this.bodyElem.appendChild(targetDOM);
+   setTimeout(function() {
+      targetDOM.style.left = 0;
+   }, 0);
    
-
-   this._sendRequest();
+   targetDOM.addEventListener('transitionend', function() {
+      self._sendRequest();
+   }); 
 };
 
 DCPrototype._sendRequest = function() {
@@ -74,4 +83,4 @@ DCPrototype._sendRequest = function() {
 
 setTimeout(function() {
    new DrawContent();
-}, 5000);
+}, 3000);
