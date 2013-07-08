@@ -33,6 +33,14 @@
       };
       initDOM.call(this);
       this._showPanel();
+      
+      // 收回打开的页面的情况
+      var self = this;
+      document.addEventListener('click', function(evt){
+         if (evt.target.id != 'ContentPanel') {
+            self.targetDOM.style.left = (0 - self.targetWidth) + 'px';
+         }
+      });
    };
 
    DCPrototype._showPanel = function() {
@@ -40,6 +48,7 @@
 
       // 显示遮罩层
       var targetWidth = self.bodyElem.clientWidth * 0.7;
+      this.targetWidth = targetWidth;
       var cal = function() {
          return 'height:' + self.bodyElem.scrollHeight + 'px;width:' + targetWidth + 'px;' + 'left:' + (targetWidth * -1) + 'px;';
       };
@@ -56,7 +65,13 @@
       }, 0);
 
       targetDOM.addEventListener('transitionend', function() {
-         self._sendRequest();
+         if (self._status) {
+            self.targetDOM.style.boxShadow = 'none';
+            self._status = 0;
+         } else {
+            self._sendRequest();
+            self._status = 1;
+         }
       });
    };
 
