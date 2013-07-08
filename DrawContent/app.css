@@ -1,0 +1,17 @@
+/**
+ * @author XU Kai(xukai.ken@gmail.com) botobe.net
+ * @version 0.0.1
+ * 
+ * 2013-07-08 初始化文件完成最基本的结构
+ * 用于提取文章中内容的Chrome插件
+ */
+
+.ContentPanel {
+   position: absolute;
+   top: 0;
+   left: 0;
+   height: 100px;
+   width: 100px;
+   background-color: #fff;
+   z-index: 1000
+}
