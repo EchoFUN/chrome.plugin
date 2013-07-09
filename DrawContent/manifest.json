@@ -3,6 +3,9 @@
    "name": "DrawContent Extension for Chrome",
    "version": "0.0.1",
    "description": "Get the content from the current view of the webside.",
+   "browser_action": {
+      "default_icon": "icon19.png"
+   },
    "content_scripts": [
       {
          "matches": ["<all_urls>"],
@@ -11,5 +14,8 @@
          "run_at": "document_start",
          "all_frames": false
       }
-   ]
+   ],
+   "background": {
+      "scripts": ["background.js"]
+   }
 }

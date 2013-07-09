@@ -99,8 +99,5 @@
       XHR.send(null);
    };
 
-   setTimeout(function() {
-      new DrawContent();
-   }, 3000);
-   
+   window.DrawContent = DrawContent;   
 })();
