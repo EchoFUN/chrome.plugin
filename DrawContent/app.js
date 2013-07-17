@@ -6,8 +6,7 @@
  * 用于提取文章中内容的Chrome插件
  */
 
-(function() {
-   'use strict';
+(function() {'use strict';
 
    var DrawContent = function() {
       this.HTMLstructure = '<span>Hello, world!</span>';
@@ -18,7 +17,7 @@
 
       // 启动APP
       // this.start();
-      
+
       // 收回打开的页面的情况
       // var self = this;
       // document.addEventListener('click', function(evt){
@@ -43,7 +42,7 @@
          this.targetDOM.style.left = 0 + 'px';
          return;
       }
-      
+
       var self = this, boby = document.body;
 
       // 显示遮罩层
@@ -67,12 +66,12 @@
             self.status = 1;
          }
       });
-      
+
       // 将UI展示流程置为异步
       setTimeout(function() {
          targetDOM.style.left = 0;
       }, 0);
-      
+
       this.targetDOM = targetDOM;
       boby.appendChild(targetDOM);
    };
@@ -100,15 +99,15 @@
       XHR.open("GET", this.url, true);
       XHR.send(null);
    };
-   
+
    DCPrototype.hide = function() {
       this.targetDOM.style.left = (0 - this.targetWidth) + 'px';
    };
-   
+
    var DCInstance = new DrawContent();
-   
+
    // 接受信号
    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       DCInstance.start();
    });
-})();
+})(); 

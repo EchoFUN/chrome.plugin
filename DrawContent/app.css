@@ -1,7 +1,7 @@
 /**
  * @author XU Kai(xukai.ken@gmail.com) botobe.net
  * @version 0.0.1
- * 
+ *
  * 2013-07-08 初始化文件完成最基本的结构
  * 用于提取文章中内容的Chrome插件
  */
@@ -13,7 +13,6 @@
    width: 100px;
    background-color: #fff;
    z-index: 1000;
-   
    -webkit-transition: left 1000ms ease-in-out;
    -webkit-box-shadow: rgb(204, 204, 204) 10px 0px 30px;
 }
