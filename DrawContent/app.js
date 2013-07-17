@@ -10,77 +10,80 @@
    'use strict';
 
    var DrawContent = function() {
-      this._HTMLstructure = '<span>Hello, world!</span>';
-      this._CSSstructure = '';
+      this.HTMLstructure = '<span>Hello, world!</span>';
 
       // 当前插件执行状态
-      this._status = 0;
-      this._url = 'http://127.0.0.1:3000/test';
+      this.status = 0;
+      this.url = 'http://127.0.0.1:3000/test';
 
       // 启动APP
-      this.start();
+      // this.start();
+      
+      // 收回打开的页面的情况
+      // var self = this;
+      // document.addEventListener('click', function(evt){
+      //    if (evt.target.id != 'ContentPanel') {
+      //       self.close();
+      //    }
+      // });
    };
 
    var DCPrototype = DrawContent.prototype;
 
    DCPrototype.start = function() {
-      this._initialize();
+      if (this.status)
+         this.hide();
+      else
+         this.show();
    };
 
-   DCPrototype._initialize = function() {
-      var initDOM = function() {
-         this.bodyElem = document.body;
-      };
-      initDOM.call(this);
-      this._showPanel();
+   DCPrototype.show = function() {
+      if (this.targetDOM) {
+         this.targetDOM.style.boxShadow = 'rgb(204, 204, 204) 10px 0px 30px'
+         this.targetDOM.style.left = 0 + 'px';
+         return;
+      }
       
-      // 收回打开的页面的情况
-      var self = this;
-      document.addEventListener('click', function(evt){
-         if (evt.target.id != 'ContentPanel') {
-            self.targetDOM.style.left = (0 - self.targetWidth) + 'px';
-         }
-      });
-   };
-
-   DCPrototype._showPanel = function() {
-      var self = this;
+      var self = this, boby = document.body;
 
       // 显示遮罩层
-      var targetWidth = self.bodyElem.clientWidth * 0.7;
+      var targetWidth = boby.clientWidth * 0.7;
       this.targetWidth = targetWidth;
       var cal = function() {
-         return 'height:' + self.bodyElem.scrollHeight + 'px;width:' + targetWidth + 'px;' + 'left:' + (targetWidth * -1) + 'px;';
+         return 'height:' + boby.scrollHeight + 'px;width:' + targetWidth + 'px;' + 'left:' + (targetWidth * -1) + 'px;';
       };
 
       var targetDOM = document.createElement('div');
-      targetDOM.innerHTML = this._HTMLstructure;
+      targetDOM.innerHTML = this.HTMLstructure;
       targetDOM.className = 'ContentPanel';
       targetDOM.id = 'ContentPanel';
       targetDOM.setAttribute('style', cal());
-      this.targetDOM = targetDOM;
-      this.bodyElem.appendChild(targetDOM);
+      targetDOM.addEventListener('transitionend', function() {
+         if (self.status) {
+            self.targetDOM.style.boxShadow = 'none';
+            self.status = 0;
+         } else {
+            self.sendRequest();
+            self.status = 1;
+         }
+      });
+      
+      // 将UI展示流程置为异步
       setTimeout(function() {
          targetDOM.style.left = 0;
       }, 0);
-
-      targetDOM.addEventListener('transitionend', function() {
-         if (self._status) {
-            self.targetDOM.style.boxShadow = 'none';
-            self._status = 0;
-         } else {
-            self._sendRequest();
-            self._status = 1;
-         }
-      });
+      
+      this.targetDOM = targetDOM;
+      boby.appendChild(targetDOM);
    };
 
-   DCPrototype._sendRequest = function() {
+   DCPrototype.sendRequest = function() {
       var XHR = new window.XMLHttpRequest();
 
       // 数据回调处理
       var self = this;
       var callbackRegister = function() {
+         return;
          if (this.readyState == 4) {
             var ContentData = this.responseText;
 
@@ -89,15 +92,23 @@
             } catch(e) {
                console.error(e.message);
             }
-
          }
       };
       XHR.onreadystatechange = callbackRegister;
 
       // 发送请求
-      XHR.open("GET", this._url, true);
+      XHR.open("GET", this.url, true);
       XHR.send(null);
    };
-
-   window.DrawContent = DrawContent;   
+   
+   DCPrototype.hide = function() {
+      this.targetDOM.style.left = (0 - this.targetWidth) + 'px';
+   };
+   
+   var DCInstance = new DrawContent();
+   
+   // 接受信号
+   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+      DCInstance.start();
+   });
 })();
