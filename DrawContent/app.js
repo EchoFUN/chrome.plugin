@@ -9,11 +9,11 @@
 (function() {'use strict';
 
    var DrawContent = function() {
-      this.HTMLstructure = '<span>Hello, world!</span>';
+      this.HTMLstructure = '<span></span>';
+      this.url = 'http://127.0.0.1:3000/test';
 
       // 当前插件执行状态
       this.status = 0;
-      this.url = 'http://127.0.0.1:3000/test';
 
       // 启动APP
       // this.start();
