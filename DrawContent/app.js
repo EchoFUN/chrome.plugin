@@ -10,7 +10,7 @@
 
    var DrawContent = function() {
       this.HTMLstructure = '<span></span>';
-      this.url = 'http://127.0.0.1:3000/test';
+      this.url = 'http://121.197.1.16:9011/api/getMainText/?url=';
 
       // 当前插件执行状态
       this.status = 0;
@@ -82,21 +82,21 @@
       // 数据回调处理
       var self = this;
       var callbackRegister = function() {
-         return;
          if (this.readyState == 4) {
             var ContentData = this.responseText;
-
             try {
                ContentData = JSON.parse(ContentData);
             } catch(e) {
                console.error(e.message);
             }
+            ContentData = ContentData[0];
+            self.targetDOM.innerHTML = ContentData.content;
          }
       };
       XHR.onreadystatechange = callbackRegister;
 
       // 发送请求
-      XHR.open("GET", this.url, true);
+      XHR.open("GET", this.url + location.href, true);
       XHR.send(null);
    };
 
