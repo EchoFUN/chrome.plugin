@@ -19,12 +19,10 @@
       // this.start();
 
       // 收回打开的页面的情况
-      // var self = this;
-      // document.addEventListener('click', function(evt){
-      //    if (evt.target.id != 'ContentPanel') {
-      //       self.close();
-      //    }
-      // });
+      var self = this;
+      document.addEventListener('click', function(evt){
+         self.hide();
+      });
    };
 
    var DCPrototype = DrawContent.prototype;
@@ -66,6 +64,9 @@
             self.status = 1;
          }
       });
+      targetDOM.addEventListener('click', function(evt){
+         evt.stopPropagation();
+      });
 
       // 将UI展示流程置为异步
       setTimeout(function() {
@@ -89,8 +90,11 @@
             } catch(e) {
                console.error(e.message);
             }
-            ContentData = ContentData[0];
-            self.targetDOM.innerHTML = ContentData.content;
+            
+            // 验证返回值长度
+            if (ContentData.length)
+               ContentData = ContentData[0];
+            ContentData && (self.targetDOM.innerHTML = ContentData.content);
          }
       };
       XHR.onreadystatechange = callbackRegister;
